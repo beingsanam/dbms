@@ -1,0 +1,648 @@
+INSERT ALL  
+  INTO table_name (column1, column2, column_n) VALUES (expr1, expr2, expr_n)  
+  INTO table_name(column1, column2, column_n) VALUES (expr1, expr2, expr_n)  
+  INTO table_name (column1, column2, column_n) VALUES (expr1, expr2, expr_n)  
+SELECT * FROM dual; 
+
+
+Create table teacher making id - primary key 
+
+create table teacher(
+    id number(10),
+    name varchar(20),
+    address varchar(20),
+    primary key(id)
+)
+
+See the structure of teacher table 
+
+desc teacher;
+
+
+Creating table copying all the columns of another table
+
+create table teacher1 as select * from teacher;
+
+
+Creating table copying only selected columns from another table
+
+create table teacer2 as select name from teacher;
+
+
+Removing the table
+
+drop table teacher2;
+
+But, this is not totally deleted. 
+It is stored in the recycle bin of oracle database with name modified "BIN$"
+It can be recovered
+
+
+To view the recycle bin : show recyclebin;
+
+To recover from recycle bin : flashback table teacher 2 to before drop;
+
+To permanently delete table from oracle database: 
+drop table teacher1 purge;
+
+
+
+---------------------------------------
+
+Altering an existing column:
+
+Adding column
+
+alter table teacher2 add address varchar(25);
+
+Removing column:
+
+alter table teacher2 drop column name;
+alter table teacher2 drop (name,email);
+
+Renaming column:
+alter table teacher rename column name to teacher_name;
+
+Modifyimg a column:
+alter table teacher modify address varchar(50);
+
+
+Renaming a table:
+alter table teacher rename staff;
+
+
+
+----------------------------------------------
+
+
+LAB-1:
+
+1.
+create table MY_EMPLOYEE(
+	id number(4),
+	last_name varchar2(25),
+	first_name varchar2(25),
+	userid varchar2(25),
+	salary number(9),
+	primary key(id)
+);
+
+2. 
+INSERT ALL 
+INTO my_employee VALUES (1,'Patel','Ralph','Rpatel',895)
+INTO my_employee VALUES (2,'Dancs','Betty','Bdancs',860)
+INTO my_employee VALUES (3,'Biri','Ben','Bbiri',1100)
+INTO my_employee VALUES (4,'Newman','Chad','Cnewman',750)
+INTO my_employee VALUES (5,'Ropeburn','Audrey','Aropebur',1550)
+SELECT * FROM dual;
+
+
+
+
+3. 
+
+select * from my_employee;
+
+4.
+update my_employee set last_name='Drexler' where id=3;
+
+5.
+update my_employee set salary=1000 where salary<900;
+
+6.
+delete from my_employee where id=2;	
+
+
+
+
+
+-----------------------------------------------------
+LAB 2
+
+1. 
+a.
+create table student(
+	sid number(4),
+	name varchar(10),
+	address varchar(20),
+	age number(2),
+	cellno number(10),
+	faculty varchar(20),
+	primary key(sid)
+);
+
+b.
+insert all 
+into student values (1,'ram','ktm',22,985185,'bca')
+into student values (2,'shyam','bkt',22,985185,'bit')
+into student values (3,'hari','brt',23,985185,'bim')
+into student values (4,'krishna','ltp',21,985185,'bba')
+into student values (5,'vishnu','btl',23,985185,'csit')
+select * from dual;
+
+c.
+select * from student;
+
+d.
+select min(age) as age from student;
+
+e.
+select count(*) from student;
+
+
+
+2.
+a.
+create table course (
+	cid number(5),
+    	student_id number references student(sid),
+	course_name varchar(20),
+	primary key(cid)
+);
+
+b. 
+insert all 
+into course values (100,1,'java')
+into course values (101,2,'c#') 
+into course values (102,3,'PHP') 
+into course values (103,1,'JS') 
+into course values (104,1,'C++')
+select * from dual;  
+
+c.
+select * from course;
+
+d.
+select count(*) from course;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------
+
+wild cards chaacters :
+
+use of like 
+% - represents any no of characters 
+_ - represents a single character
+
+select ---- from ----- where first_name like ----
+
+name starts with j -- where name like 'j%'
+name ends with s -- where name like '%s'
+name contains s -- where name like '%s%'
+name starts with l and has 3 characters after it --- where name like 'j___'
+name ends with s and has 3 chaaracters before it --- where name like '___s'
+
+
+
+
+--------------------------------------------
+
+
+
+
+LAB 3
+
+
+1.	
+A. create a table employee (ename , address , age)
+
+create table employee(
+ ename varchar(30),
+ address varchar(30),
+ age number(2)
+);
+
+B. Insert into employee (Ram,Ktm,29) (Hari, Bkt, 35)  (Sita, Ltp, 24)
+
+insert all 
+into employee values('Ram','Ktm',29)
+into employee values ('Hari', 'Bkt', 35)
+into employee values ('Sita', 'Ltp', 24)
+select * from dual;
+
+2.	
+A. create a table Worker (ename ,designation ,salary)
+
+create table worker(
+ ename varchar(30),
+ designation varchar(30),
+ salary number(10)
+);
+
+
+B. Insert into worker (Ram,Manager,25000) (Hari,Staff, 12000)  (Shyam,Director, 35000)
+
+insert all 
+into worker values('Ram','Manager',25000)
+into worker values ('Hari','Staff', 12000)
+into worker values ('Shyam','Director', 35000)
+select * from dual;
+
+
+3.	Use inner join to fetch all data from employee and worker
+
+
+select * from employee inner join worker on employee.ename = worker.ename;
+
+
+4.	Use left outer join to fetch all data from employee and worker
+
+select * from employee left outer join worker on employee.ename = worker.ename;
+
+
+5.	Use right outer join to fetch all data from employee and worker
+
+select * from employee right outer join worker on employee.ename = worker.ename;
+
+
+6.	Use full outer join to fetch all data from employee and worker
+
+select * from employee full outer join worker on employee.ename = worker.ename;
+
+
+
+
+
+----------------------------
+
+LAB 4
+
+using employees table of hr
+
+1. write a query that displays first_name and count its no of characters
+
+select first_name,length(first_name)as No_of_characters from employees;
+
+
+2. --- that displays first_name,salary whose first name has a and e 
+
+select first_name, salary from employees where first_name like '%a%' and first_name like '%e%';
+
+3. ----that displays first name, salary whose last name has a or e and whose salary is not 2500,3500,4500
+
+
+select first_name, salary from employees where (last_name like '%e%' or last_name like '%a%') and salary not in (2500,3500,4500); 
+
+
+4. ----displays first_name in uppercase, salary, job id whose job id is 'ST_CLERK' or 'SALES_REP'
+
+
+select upper(first_name), salary, job_id from employees where job_id in ('ST_CLERK','SALES_REP');
+
+
+5. --display first_name, salary and salary increased by 15%
+
+select first_name, salary, salary + salary*0.15 as New_salary from employees;
+
+
+6. --display first_name, last_name, salary and salary increased by 15% removing the decimal and sort the last_name in ascending order.
+
+
+select first_name, last_name, salary, round(salary+salary*0.15) as New_salary from employees order by last_name;
+
+7. ---display first_name ,last_name, salary with 10 characters left padded with '$'
+
+
+select first_name, last_name , LPAD(salary,10,'$') from employees;
+
+
+-----------------------------------------------
+
+
+highest salary :
+
+select first_name,salary from employees where salary = (select max(salary) from employees);
+
+
+second highest salary
+
+
+select first_name, salary from employees where salary = (select max(salary) from employees where salary not in (select max(salary) from employees));
+
+
+
+
+
+---------------------------------------------------------------------------
+
+
+
+Lab - 5
+
+
+Writing select queries and using aggregate functions
+----------------------------------------------------- 
+Using the "employees" table of "HR" user: 
+1. Write a query to find the maximum salary in employees table.
+
+select max(salary) from employees;
+
+2. Write a query to find the minimum salary in employees table.
+
+select min(salary) from employees;
+
+3. Write a query to find the minimum salary in employees table.
+
+select min(salary) from employees;
+
+4. Write a query to find the average salary in employees table.
+
+select avg(salary) from employees;
+
+5. Write a query to find the total salary in employees table.
+
+select sum(salary) from employees;
+
+6. Write a query to count the number of employees in employees table.
+
+select count(*) from employees;
+
+7. Write a query to display the first name and last name of highest paid employee.
+
+select first_name, last_name from employees where salary=(select max(salary) from employees);
+
+8. Write a query to display the first name and last name of lowest paid employee.
+
+select first_name, last_name from employees where salary=(select min(salary) from employees);
+
+9. Write a query to display all unique job codes (job_id) from the EMPLOYEES table.
+
+select distinct job_id from employees;
+
+10. Write a query to display the last name concatenated with the job ID (Separated by a comma and space) and name the column 'Employee and Title'.
+
+select last_name || ',' || job_id as EmployeesAndTitle from employees;
+
+11. Write a query that displays the last name and salary for all employees whose salary is not in the $5,000 - $12,000 range. 
+
+select last_name, salary from employees where salary not between 5000 and 12000;
+
+12. Write a query to display the last name, job ID, and start date for the employees whose last names are Matos and Taylor. Order the query in ascending order by start date.
+
+
+select last_name, job_id, hire_date from employees where last_name ='Matos' or last_name = 'Taylor' order by hire_date asc;
+
+
+
+
+
+
+
+
+
+
+
+-------------------------------------------------
+
+
+Lab - 6 
+
+View and stored procedure
+
+1. 
+
+create or replace view Employees_view as select first_name, last_name, salary, job_id from employees;
+
+select * from Employees_view;
+
+
+2.
+
+create or replace view Employees_count as select department_id, count(*)as no_of_employees from employees group by department_id;
+
+select * from Employees_count;
+
+
+3.
+
+create or replace view Join_view
+as select last_name, salary, job_title, department_name
+from employees inner join jobs on employees.job_id = jobs.job_id 
+inner join departments on employees.department_id =  departments.department_id;
+
+select * from join_view;
+
+4.
+
+CREATE SEQUENCE student_seq 
+MINVALUE 1
+MAXVALUE 100
+START WITH 1
+INCREMENT BY 1
+;
+
+create table student(
+sid NUMBER(5),
+name VARCHAR(20) not null,
+age number(2) not null,
+faculty varchar(20) not null,
+primary key(sid)
+);
+
+
+a.
+
+create procedure InsertRecord(name varchar, age number, faculty varchar)
+as
+begin
+insert into student values (STUDENT_SEQ.nextval,name,age,faculty);
+end;
+
+EXEC InsertRecord ('ram', 22, 'bca');
+EXEC InsertRecord ('hari', 22, 'csit');
+EXEC InsertRecord ('kridhna', 23, 'bit');
+
+
+b.
+
+create or replace procedure DisplayRecord
+(n out number)
+as
+begin
+SELECT
+   count(*)into n
+FROM student;
+end;
+
+Variable K number;
+execute DisplayRecord(:K); 
+print :K;
+
+
+c.
+
+
+
+--------------------------
+
+
+Lab 7 
+Triggers
+
+
+1.
+
+Set serveroutput on; 
+
+Create or replace trigger std_trigger
+After insert on student
+BEGIN
+dbms_output.put_line('Record inserted');
+END;
+
+
+insert into student values (4,'SHIVA',25,'mba');
+
+2.
+
+Create or replace trigger salary_update_check
+Before update of salary on tbl_employee
+For each row
+Begin
+IF :New.salary < :old.salary THEN
+RAISE_APPLICATION_ERROR(-20125,'updated salary 
+cannot be less then current salary');
+END IF;
+END;
+/
+
+3.
+
+Create or replace trigger hrtr1
+Before drop on hr.schema
+Begin
+dbms_output.put_line('Dropped');
+End;
+/
+
+drop table tbl_employee;
+
+4.
+
+create or replace trigger restricted_insert
+before insert on student
+begin
+IF (TO_CHAR(SYSDATE,'HH24:MI') NOT BETWEEN '06:00' 
+and '10:00') THEN
+Raise_application_error(-20125,'employ can be added only 
+between 6:00 AM and 10:00 am ');
+end if;
+end;
+
+update student set age=24 where sid=3;
+
+
+5.
+
+Suppose we have two tables:
+ Accounts(ACNO, NAME, BALANCE)
+ Transactions(TID, ACNO, TDATE, AMOUNT, 
+BALANCE)
+ Whenever a user performs deposit/withdrawal 
+(update) on his accounts, that record should also be 
+automatically inserted into transactions table.
+
+
+Create sequence ac_seq [to generate auto number 
+for TID]
+Create or replace trigger actr2
+Before update on account 
+for each row
+Begin
+Insert into transactions (TID, acno, tdate, amount, balance) 
+values (ac_seq.nextval, :new.acno, sysdate, 
+abs(:new.balance - :old.balance), :new.balance);
+END;
+/
+
+
+
+
+-----------------------------------------
+
+
+Lab - 8
+
+
+1. Create a user user1 with password user1
+
+create user user1 identified by user1;
+
+2. Create a user user2 with password user2
+
+create user user2 identified by user2;
+
+3. Grant create session privilege to both users
+
+grant create session to user1;
+grant create session to user2;
+
+4. Grant all privileges to user1
+
+grant all privileges to user1;
+
+5. Grant select privilege on hr.employees to user2
+
+grant select on hr.employees to user2;
+
+
+6. REvoke the privilege from user1 and user2;
+
+revoke all privileges from user1;
+
+7. create a role role1 and assign it with select
+
+create role role1;
+grant select on hr.employees to role1;
+
+
+8. Assign role1 to user1 and user2
+
+grant role1 to user1,user2;
+
+9. Revoke role1 from user1 and user2
+
+revoke role1 from user1,user2;
+
+10. Remove role1
+
+drop role role1;
+
+11. Remove user1 and user2
+
+--------------------------------
+
+
+LAB -9
+TCL (Transaction Control Language)
+Explain the concept of TCL and write appropriate queries to illustrate  the use of TCL commands.
+
+
+
