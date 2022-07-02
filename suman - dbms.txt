@@ -1,0 +1,87 @@
+1. a
+
+create table student(
+	sid number(10),
+	name varchar(50) not null,
+	address varchar(50) not null,
+	age number(3)not null,
+    faculty varchar(10)not null,
+	primary key(sid)
+);
+
+1.b
+
+insert all 
+into student values (1,'ram','ktm',22,'bca')
+into student values (2,'shyam','bkt',22,'bit')
+into student values (3,'hari','brt',22,'bim')
+into student values (4,'krishna','ltp',21,'bba')
+into student values (5,'vishnu','btl',21,'csit')
+
+select * from dual;
+
+1.c
+
+select min(age) as age from student;
+
+1.d
+
+select count(*) from student;
+
+1.e
+
+select * from student where name like '%a';
+
+
+2.a
+
+create table course(
+cid number(10),
+student_id number references student(sid),
+course_name varchar(50) not null,
+primary key(cid)
+);
+
+
+2.b 
+
+insert all 
+into course values (100,1,'java')
+into course values (101,2,'c#') 
+into course values (102,3,'PHP') 
+into course values (103,4,'JS') 
+into course values (104,5,'C++')
+into course values (105,5,'dbms')
+select * from dual;  
+
+2.c 
+
+select count(*) from course group by cid;
+
+
+3.
+
+create or replace view student_view
+as select name, address, faculty, course_name
+from student inner join course on student.sid = course.student_id where course_name='dbms'; 
+
+select * from student_view;
+
+
+4.
+
+create or replace procedure DisplayRecord
+(n out number)
+as
+begin
+SELECT
+   count(*)into n
+FROM student;
+end;
+
+Variable K number;
+execute DisplayRecord(:K); 
+print :K;
+
+
+
